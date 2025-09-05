@@ -13,6 +13,7 @@ router = APIRouter(prefix="/customers", tags=["Customers"])
 @router.post("/", response_model=CustomerResponse)
 def create_customer(customer: CustomerCreate, db: Session = Depends(get_db)):
     new_employee = Customer(
+        # TODO: change to customer_first_name/last_name
         employee_first_name=customer.customer_first_name,
         employee_last_name=customer.customer_last_name,
     )

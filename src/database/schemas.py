@@ -30,7 +30,6 @@ class Account(Base):
     account_id = Column(UUID, primary_key=True, unique=True, index=True, default=uuid.uuid4)
     customer_id = Column(UUID, ForeignKey('customers.customer_id'), nullable=False)
     account_balance = Column(Float, nullable=False)
-    customer = relationship("Customer", back_populates="accounts")
 
 
 class Transaction(Base):
