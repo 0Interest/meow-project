@@ -1,10 +1,11 @@
+import uuid
 from datetime import date
 from uuid import UUID
 
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
-from src.api.v1.routes.account.models import AccountResponse, AccountCreate, TransactionResponse
+from src.api.v1.routes.account.models import AccountResponse, AccountCreate, TransactionResponse, TransferRequest
 from src.database import get_db
 from src.database.schemas import Account, Transaction
 
@@ -24,16 +25,38 @@ def create_account(account: AccountCreate, db: Session = Depends(get_db)):
 
 
 @router.post("/transfer", response_model=TransactionResponse)
-def transfer(sender_account_id: UUID, receiver_account_id: UUID, amount: float, db: Session = Depends(get_db)):
+def transfer(transfer: TransferRequest, db: Session = Depends(get_db)):
+    if transfer.amount <= 0:
+        raise HTTPException(status_code=400, detail="Transfer amount must be greater than zero")
+
+    sender_account = db.query(Account).filter(Account.account_id == transfer.sender_account_id).first()
+    receiver_account = db.query(Account).filter(Account.account_id == transfer.receiver_account_id).first()
+
+    if not sender_account:
+        raise HTTPException(status_code=404, detail="Sender account not found")
+    if not receiver_account:
+        raise HTTPException(status_code=404, detail="Receiver account not found")
+
+    if sender_account.account_balance < transfer.amount:
+        raise HTTPException(status_code=400, detail="Insufficient funds in sender's account")
+
+    # Update balances
+    sender_account.account_balance -= transfer.amount
+    receiver_account.account_balance += transfer.amount
+
+    # Create transaction record
     new_transaction = Transaction(
+        transaction_id=uuid.uuid4(),
         transaction_date=date.today(),
-        sender_account_id=sender_account_id,
-        receiver_account_id=receiver_account_id,
-        amount=amount
+        sender_account_id=transfer.sender_account_id,
+        receiver_account_id=transfer.receiver_account_id,
+        amount=transfer.amount
     )
+
     db.add(new_transaction)
     db.commit()
     db.refresh(new_transaction)
+
     return new_transaction
 
 
