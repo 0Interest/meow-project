@@ -5,7 +5,8 @@ from uuid import UUID
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
-from src.api.v1.routes.account.models import AccountResponse, AccountCreate, TransactionResponse, TransferRequest
+from src.api.v1.routes.account.models import AccountResponse, AccountCreate
+from src.api.v1.routes.transaction.models import TransactionResponse, TransferRequest
 from src.database import get_db
 from src.database.schemas import Account, Transaction
 
@@ -25,7 +26,7 @@ def create_account(account: AccountCreate, db: Session = Depends(get_db)):
 
 
 @router.post("/transfer", response_model=TransactionResponse)
-def transfer(transfer: TransferRequest, db: Session = Depends(get_db)):
+def transfer_between_accounts(transfer: TransferRequest, db: Session = Depends(get_db)):
     if transfer.amount <= 0:
         raise HTTPException(status_code=400, detail="Transfer amount must be greater than zero")
 
