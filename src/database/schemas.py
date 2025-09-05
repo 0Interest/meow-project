@@ -1,6 +1,6 @@
 import uuid
 from sqlalchemy import Column, String, Float, ForeignKey
-from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.dialects.postgresql import UUID, DATE
 from sqlalchemy.orm import relationship, declarative_base
 
 Base = declarative_base()
@@ -36,6 +36,7 @@ class Transaction(Base):
     __tablename__ = "transactions"
 
     transaction_id = Column(UUID, primary_key=True, index=True)
+    transaction_date = Column(DATE, index=True, nullable=False)
     sender_account_id = Column(UUID, index=True, nullable=False)
     receiver_account_id = Column(UUID, index=True, nullable=False)
     amount = Column(Float, index=True, nullable=False)

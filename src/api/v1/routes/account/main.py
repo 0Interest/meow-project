@@ -1,11 +1,12 @@
+from datetime import date
 from uuid import UUID
 
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
-from src.api.v1.routes.account.models import AccountResponse, AccountCreate
+from src.api.v1.routes.account.models import AccountResponse, AccountCreate, TransactionResponse
 from src.database import get_db
-from src.database.schemas import Account
+from src.database.schemas import Account, Transaction
 
 router = APIRouter(prefix="/accounts")
 
@@ -20,6 +21,20 @@ def create_account(account: AccountCreate, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(new_account)
     return new_account
+
+
+@router.post("/transfer", response_model=TransactionResponse)
+def transfer(sender_account_id: UUID, receiver_account_id: UUID, amount: float, db: Session = Depends(get_db)):
+    new_transaction = Transaction(
+        transaction_date=date.today(),
+        sender_account_id=sender_account_id,
+        receiver_account_id=receiver_account_id,
+        amount=amount
+    )
+    db.add(new_transaction)
+    db.commit()
+    db.refresh(new_transaction)
+    return new_transaction
 
 
 @router.get("/{account_id}", response_model=AccountResponse)
