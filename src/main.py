@@ -7,6 +7,6 @@ Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
-app.include_router(employee_router, tags=["employee"])
-app.include_router(customer_router, tags=["customer"])
-app.include_router(account_router, tags=["account"])
+app.include_router(employee_router, tags=["Employees"])
+app.include_router(customer_router, tags=["Customers"])
+app.include_router(account_router, tags=["Accounts"])

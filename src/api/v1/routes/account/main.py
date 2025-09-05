@@ -7,7 +7,7 @@ from src.api.v1.routes.account.models import AccountResponse, AccountCreate
 from src.database import get_db
 from src.database.schemas import Account
 
-router = APIRouter(prefix="/accounts", tags=["Accounts"])
+router = APIRouter(prefix="/accounts")
 
 
 @router.post("/", response_model=AccountResponse)

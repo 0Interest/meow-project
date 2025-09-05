@@ -7,7 +7,7 @@ from src.api.v1.routes.employee.models import EmployeeResponse, EmployeeCreate
 from src.database import get_db
 from src.database.schemas import Employee
 
-router = APIRouter(prefix="/employees", tags=["Employees"])
+router = APIRouter(prefix="/employees")
 
 
 @router.post("/", response_model=EmployeeResponse)

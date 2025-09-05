@@ -7,7 +7,7 @@ from src.api.v1.routes.customer.models import CustomerCreate, CustomerResponse
 from src.database import get_db
 from src.database.schemas import Customer
 
-router = APIRouter(prefix="/customers", tags=["Customers"])
+router = APIRouter(prefix="/customers")
 
 
 @router.post("/", response_model=CustomerResponse)
