@@ -36,6 +36,6 @@ The project uses **FastAPI**, **SQLAlchemy/SQLModel**, **PostgreSQL**, and **Pyd
 # Installation and Usage
 - Clone the repository
 - Run a local PostgreSQL server
-- Change `.env` to have the right variables (Username & Password)
+- Change `.env` to have the right variables (Database name, username, password, host and port)
 - Run `pip install -r requirements.txt`
 - Run `fastapi dev main.py`
