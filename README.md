@@ -1,3 +1,12 @@
+
+
+> ⚠️ **Note**:  
+> This is a **simple FastAPI CRUD server** created for demonstration purposes only.  
+> It does **not** implement any security measures such as **JWT authentication, CORS handling, or authorization logic**.  
+> The server is not being **tested** as well (unit or e2e)
+
+---
+
 # Banking System API
 
 A simple **FastAPI-based Banking System** that demonstrates core banking operations:  
@@ -41,10 +50,3 @@ The project uses **FastAPI**, **SQLAlchemy/SQLModel**, **PostgreSQL**, and **Pyd
 - Change `.env` to have the right variables (Database name, username, password, host and port)
 - Run `pip install -r requirements.txt`
 - Run `fastapi dev main.py`
-
----
-
-> ⚠️ **Note**:  
-> This is a **simple FastAPI CRUD server** created for demonstration purposes only.  
-> It does **not** implement any security measures such as **JWT authentication, CORS handling, input validation, or authorization logic**.  
-> The server is not being **tested** as well (unit or e2e)
