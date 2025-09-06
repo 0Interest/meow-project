@@ -33,7 +33,7 @@ The project uses **FastAPI**, **SQLAlchemy/SQLModel**, **PostgreSQL**, and **Pyd
   - Get transaction by ID
   - Get transactions by sender account ID
 
-# Installation
+# Installation and Usage
 - Clone the repository
 - Run a local PostgreSQL server
 - Change `.env` to have the right variables (Username & Password)
