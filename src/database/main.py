@@ -6,8 +6,10 @@ from src.config import database_config
 database_name = database_config.DATABASE_NAME
 database_username = database_config.DATABASE_USERNAME
 database_password = database_config.DATABASE_PASSWORD
+database_host = database_config.DATABASE_HOST
+database_port = database_config.DATABASE_PORT
 
-db_url = f"postgresql://{database_username}:{database_password}@localhost:5432/{database_name}"
+db_url = f"postgresql://{database_username}:{database_password}@{database_host}:{database_port}/{database_name}"
 engine = create_engine(db_url)
 session = sessionmaker(autoflush=False, bind=engine)
 
